@@ -1,29 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
 <head>
 <title>Facebook Login JavaScript Example</title>
 
+<title>Inspire-se</title>
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/estilo.css">
+
 <script src="<c:url value='/js/jquery-2.1.1.min.js'/>"></script>
 <script type="text/javascript">
-
-function getFrase() {
+	var frase = "";
+	function getFrase() {
 		$.getJSON("frase", function(data) {
 			alert(data.frase)
-			$("#frase").append("<h1>" + data.frase + "</h1>");
-			FB.login(function(){
-				 FB.api('/me/feed', 'post', {message: data.frase});
-				}, {scope: 'publish_actions'});
-
+			frase = data.frase;
 
 		});
-		/* 		$.get('frase', function(data) {	
-		 alert(data.frase);
-		 });
-		 */
+	}
+
+	function postar() {
+		$("#frase").append("<h1>" + frase + "</h1>");
+		FB.login(function() {
+			FB.api('/me/feed', 'post', {
+				message : data.frase
+			});
+		}, {
+			scope : 'publish_actions'
+		});
 	}
 </script>
 </head>
@@ -41,10 +49,15 @@ function getFrase() {
 			if (response.status === 'connected') {
 				// Logged into your app and Facebook.
 				testAPI();
+				getFrase();
+				$("#mensagem").slideUp();
+				$("#logar").slideDonw();
+
 			} else if (response.status === 'not_authorized') {
 				// The person is logged into Facebook, but not your app.
 				document.getElementById('status').innerHTML = 'Please log '
 						+ 'into this app.';
+				
 			} else {
 				// The person is not logged into Facebook, so we're not sure if
 				// they are logged into this app or not.
@@ -96,7 +109,7 @@ function getFrase() {
 				return;
 			js = d.createElement(s);
 			js.id = id;
-			js.src = "//connect.facebook.net/en_US/sdk.js";
+			js.src = "//connect.facebook.net/pt_BR/sdk.js";
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
 
@@ -148,13 +161,119 @@ function getFrase() {
   the FB.login() function when clicked.
 -->
 
-<fb:login-button scope="public_profile,email,user_friends,read_stream" onlogin="checkLoginState();">
-	</fb:login-button>
+
 
 	<div id="status"></div>
 	<div id="frase"></div>
-	
-	
-	<button onClick="getFrase()">Frase</button>
+
+	<div class="cabecalho">
+
+		<div class="rowCabechalho">
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+				<img src="imagens/logo_inspiri-se.png">
+			</div>
+			<div class="col-md-2"></div>
+
+		</div>
+
+	</div>
+
+	<div class="chame">
+		<!-- Grids para cores complementares -->
+		<div class="row">
+			<div class="col-md-4" style="background: #ff6dc5">
+				<br>
+			</div>
+			<div class="col-md-4" style="background: #ff8a6d">
+				<br>
+			</div>
+			<div class="col-md-4" style="background: #6dffdf">
+				<br>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="corpo">
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+				<div class="nota"
+					style="background-imagem: url(/imagens/mensagem.jpeg);"></div>
+				<div id="mensagem" style= "display: none;">
+					<img src="imagens/mensagem.jpeg"> <br> <br>
+					<button type="button" class="btn btn-primary" onClick="postar()">Publicar</button>
+				</div>
+
+				<div id="logar">
+					
+					<fb:login-button
+						scope="public_profile"
+						onlogin="checkLoginState();">
+					</fb:login-button>
+
+				</div>
+				<br> <br> <br>
+			</div>
+			<div class="col-md-2"></div>
+		</div>
+	</div>
+
+	<div class="rodape">
+
+		<div class="aplicativo">
+			<div class="row">
+				<div class="col-md-2"></div>
+				<div class="col-md-8">
+					<img src="imagens/oque_e_aplicativo.png"> <br>
+					<div class="well">
+						<p class="text-justify">
+						<h1>
+							<small>Um aplicativo desenvolvido por alunos na
+								Universidade Federal do Ceará- Campus Quixadá na disciplina de
+								Redes Sociais que tem como objetivo motivar seus usuários com
+								frases inspiradoras que os levem a analisar e refletir sobre a
+								vida de um modo geral, podendo ainda compartilhar as motivações
+								com seus amigos do facebook. </small>
+						</h1>
+						</p>
+						<br> <br>
+						<center>
+							<img src="imagens/RS-nurvem.png">
+						</center>
+						<div class="col-md-2"></div>
+						<br> <br>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="Equipe">
+			<div class="row">
+				<div class="col-md-2"></div>
+				<div class="col-md-8">
+					<img src="imagens/quem_somos.png"><br>
+					<div class="well">
+						<p class="text-justify">
+						<h1>
+							<small> Alunos dos cursos de Engenharia de Software e
+								Sistemas de Informação da Universidade Federal do Ceará-Campus
+								Quixadá. </small>
+						</h1>
+						</p>
+						<br>
+						<center>
+							<img src="imagens/grafo2.png">
+						</center>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-md-2"></div>
+
+		</div>
+	</div>
 </body>
 </html>
